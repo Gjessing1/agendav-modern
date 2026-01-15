@@ -5,6 +5,7 @@
 [![Docker](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern)
 [![Contributions Welcome](https://img.shields.io/badge/contributions_welcome-brightgreen.svg?labelColor=brightgreen)](./CONTRIBUTING.md)
 
+
 AgenDAV is a CalDAV web client which features an AJAX interface to allow
 users to manage their own calendars and shared ones.
 
@@ -93,6 +94,16 @@ This fork exists specifically to explore UI and UX improvements that are out of 
 
 Security fixes, backend behavior, and protocol compatibility are inherited from upstream.
 
-## Contribution
+## Found a bug or missing a spesific feature?
+- Found a bug or have an idea for an improvement? Open an issue in the repository and I’ll take a look and see if its within my capacity.
 
+## Contribution
 [Contributions](./CONTRIBUTING.md) are welcome!
+
+## Like the project?
+Please consider buying me a coffe, I really do drink it alot!
+<p>
+  <a href="https://buymeacoffee.com/gjessing">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" width="80" style="vertical-align: middle;">
+  </a>
+</p>
