@@ -1,9 +1,9 @@
 # AgenDAV - CalDAV web client
 
-[![License](https://img.shields.io/badge/license-gpl--3.0--or--later-blue.svg)](https://spdx.org/licenses/GPL-3.0-or-later.html)
-[![Made With](https://img.shields.io/badge/made_with-php-blue)](https://github.com/agendav/agendav#requirements)
-[![Docker](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern)
-[![Contributions Welcome](https://img.shields.io/badge/contributions_welcome-brightgreen.svg?labelColor=brightgreen)](./CONTRIBUTING.md)
+![GitHub stars](https://img.shields.io/github/stars/gjessing1/agendav-modern?style=social) [![License](https://img.shields.io/badge/license-gpl--3.0--or--later-blue.svg)](https://spdx.org/licenses/GPL-3.0-or-later.html) [![Latest release](https://img.shields.io/github/v/release/gjessing1/agendav-modern)](https://github.com/Gjessing1/agendav-modern/releases) [![Docker](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern) [![Made With PHP](https://img.shields.io/badge/made_with-php-blue)](https://github.com/agendav/agendav#requirements) [![Contributions Welcome](https://img.shields.io/badge/contributions_welcome-brightgreen.svg)](./CONTRIBUTING.md)
+
+
+
 
 
 AgenDAV is a CalDAV web client which features an AJAX interface to allow
