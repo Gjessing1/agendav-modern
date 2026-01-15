@@ -1,16 +1,44 @@
 # AgenDAV - CalDAV web client
 
-[![Maintenance mode](https://img.shields.io/badge/maintenance_mode-%F0%9F%9A%A7-grey.svg?labelColor=orange)](https://github.com/agendav/agendav/#maintenance-mode)
-[![Build Status](https://img.shields.io/github/workflow/status/agendav/agendav/CI/main)](https://github.com/agendav/agendav/actions)
-[![Docs](https://readthedocs.org/projects/agendav/badge/?version=latest)](https://agendav.readthedocs.io/)
-[![Made With](https://img.shields.io/badge/made_with-php-blue)](https://github.com/agendav/agendav#requirements)
 [![License](https://img.shields.io/badge/license-gpl--3.0--or--later-blue.svg)](https://spdx.org/licenses/GPL-3.0-or-later.html)
-[![Contribution](https://img.shields.io/badge/contributions_welcome-%F0%9F%94%B0-brightgreen.svg?labelColor=brightgreen)](https://github.com/agendav/agendav/blob/development/CONTRIBUTING.md)
+[![Made With](https://img.shields.io/badge/made_with-php-blue)](https://github.com/agendav/agendav#requirements)
+[![Docker](https://img.shields.io/badge/docker-ghcr.io-blue?logo=docker)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern)
+[![Contributions Welcome](https://img.shields.io/badge/contributions_welcome-brightgreen.svg?labelColor=brightgreen)](./CONTRIBUTING.md)
 
 AgenDAV is a CalDAV web client which features an AJAX interface to allow
 users to manage their own calendars and shared ones.
 
 ![Screenshot](./docs/screenshot.png)
+
+## About this fork
+
+**agendav-modern** is a UI-focused fork of [AgenDAV](https://github.com/agendav/agendav).
+
+The goal of this fork is to modernize the user interface and improve day-to-day usability while keeping the backend, database schema, and CalDAV behavior **fully compatible with upstream AgenDAV**.
+
+**Scope**
+- UI / frontend only
+- No backend logic changes
+- No database changes
+- No API changes
+
+This fork is intended to be a drop-in replacement for AgenDAV.
+
+## Planned changes
+
+> ⚠️ No changes have been implemented yet.  
+> This section describes the intended direction of the project.
+
+Planned improvements focus on visual clarity, accessibility, and modern browser expectations:
+
+- Dark and light mode support
+- Updated color palette and typography
+- Improved responsiveness for smaller screens
+- Minor UX refinements (spacing, contrast, visual hierarchy)
+- Better accessibility defaults (contrast, focus states)
+
+The backend behavior, CalDAV interaction, and configuration model will remain fully compatible with upstream AgenDAV.
+
 
 ## Requirements
 
@@ -38,36 +66,32 @@ https://agendav.readthedocs.io/
 
 See [installation guide](https://agendav.readthedocs.io/en/latest/admin/installation/)
 
-### Docker Image
+### Docker
+AgenDAV Modern does not yet have an official Docker image, but one is planned and will be published on [GitHub Container Registry (GHCR)](https://ghcr.io/) for testing and development purposes and easy deployment.
 
-Agendav offers no official Docker image. However, you may use unofficial docker images provided by the community instead, for example https://ghcr.io/nagimov/agendav-docker.
+Community images built for upstream AgenDAV should also work, as backend and configuration remain fully compatible.
 
 ## Source
 
 https://github.com/agendav/agendav
 
 ## License
+This project is licensed under the GNU General Public License v3.0 or later,
+inherited from upstream AgenDAV.
 
-GNU General Public License v3.0 or later
 https://spdx.org/licenses/GPL-3.0-or-later.html
+
 
 ## Changelog
 
 See [CHANGELOG.md](./CHANGELOG.md)
 
-## Maintenance Mode
+## Upstream maintenance status
 
-AgenDAV is in maintenance mode currently. This means that the maintainers
-choose to prioritize stability and compatibility over new features for now.
+The upstream AgenDAV project is currently in maintenance mode.
+This fork exists specifically to explore UI and UX improvements that are out of scope for upstream, while continuing to rely on its stable backend.
 
-- There is no active development & new major features are not planned
-- New features may be added by PRs however
-  - New features may be proposed in issues tickets, send as Pull Requests,
-    and the maintainers will review and presumably merge them
-- *PRs for bugfixes are welcome* and will be reviewed & merged
-- PRs to keep the software compatible with new PHP versions or the like
-  are welcome and will be reviewed & merged
-- Critical security concerns will be addressed
+Security fixes, backend behavior, and protocol compatibility are inherited from upstream.
 
 ## Contribution
 
