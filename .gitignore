@@ -27,3 +27,7 @@ web/public/dist/js/*.js
 /bower_components/
 /dist/
 .idea
+CLAUDE.md
+
+# Docker
+.env

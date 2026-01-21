@@ -1,0 +1,63 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# IDE and editor
+.idea
+.vscode
+*.swp
+*~
+.DS_Store
+
+# Development and local files
+.vagrant
+vagrant_ansible_inventory_default
+CLAUDE.md
+
+# Documentation (not needed at runtime)
+doc/
+docs/
+*.md
+!README.md
+
+# Testing
+tests/
+phpunit.xml
+.php-version
+.travis.yml
+
+# Build artifacts (will be generated fresh)
+node_modules/
+bower_components/
+web/vendor/
+web/public/dist/
+
+# Ansible provisioning (for Vagrant)
+ansible/
+
+# Docker files (avoid recursive inclusion)
+Dockerfile
+docker-compose*.yml
+.dockerignore
+
+# Local configuration (will be generated from env vars)
+web/config/settings.php
+
+# Cache and logs
+web/var/cache/*
+web/var/log/*
+!web/var/cache/.keep
+!web/var/log/.keep
+
+# Distribution archives
+agendav-built*
+dist/
+*.tar.gz
+*.zip
+
+# SQLite databases
+*.sqlite
+
+# Transifex
+.tx/

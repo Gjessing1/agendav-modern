@@ -1,0 +1,53 @@
+# AgenDAV Modern - Docker Compose
+#
+# Quick Start:
+#   1. Copy .env.example to .env and configure
+#   2. Run: docker compose up -d
+#   3. Access AgenDAV at http://localhost:8080
+#
+# For production, configure a reverse proxy (Caddy, nginx, Traefik)
+# See README.md for detailed instructions
+
+services:
+  agendav:
+    image: ghcr.io/gjessing1/agendav-modern:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agendav-modern
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    env_file:
+      - .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - agendav_logs:/var/www/html/web/var/log
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mariadb:10.11
+    container_name: agendav-modern-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-rootpassword}
+      MYSQL_DATABASE: ${AGENDAV_DB_NAME:-agendav}
+      MYSQL_USER: ${AGENDAV_DB_USER:-agendav}
+      MYSQL_PASSWORD: ${AGENDAV_DB_PASSWORD:-changeme}
+    volumes:
+      - agendav_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      start_period: 10s
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  agendav_db:
+    name: agendav_db
+  agendav_logs:
+    name: agendav_logs

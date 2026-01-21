@@ -68,9 +68,137 @@ https://agendav.readthedocs.io/
 See [installation guide](https://agendav.readthedocs.io/en/latest/admin/installation/)
 
 ### Docker
-AgenDAV Modern does not yet have an official Docker image, but one is planned and will be published on [GitHub Container Registry (GHCR)](https://ghcr.io/) for testing and development purposes and easy deployment.
 
-Community images built for upstream AgenDAV should also work, as backend and configuration remain fully compatible.
+AgenDAV Modern provides an official Docker image published to [GitHub Container Registry (GHCR)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern).
+
+```bash
+docker pull ghcr.io/gjessing1/agendav-modern:latest
+```
+
+#### Quick Start
+
+1. **Clone the repository and configure:**
+   ```bash
+   git clone https://github.com/Gjessing1/agendav-modern.git
+   cd agendav-modern
+   cp .env.example .env
+   ```
+
+2. **Edit `.env` with your settings** (see [Configuration](#configuration) below)
+
+3. **Start the services:**
+   ```bash
+   docker compose up -d
+   ```
+
+4. **Access AgenDAV** at http://localhost:8080
+
+#### Configuration
+
+All configuration is done via environment variables in the `.env` file. Copy `.env.example` to `.env` and customize:
+
+**Required settings:**
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `AGENDAV_DB_PASSWORD` | Database password | `secure_password` |
+| `AGENDAV_CALDAV_BASEURL` | CalDAV server URL (`%u` = username) | `http://radicale:5232/%u` |
+| `AGENDAV_ENCRYPTION_KEY` | 32-char key for password encryption | Generate with `openssl rand -base64 32` |
+| `AGENDAV_CSRF_SECRET` | CSRF protection secret | Generate with `openssl rand -base64 32` |
+
+**Common settings:**
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `AGENDAV_SITE_TITLE` | Site title shown in header | `Calendar` |
+| `AGENDAV_SERVER_NAME` | Apache ServerName (for non-proxy setups) | _(empty)_ |
+| `AGENDAV_TIMEZONE` | Default timezone | `UTC` |
+| `AGENDAV_LANGUAGE` | Default language | `en` |
+| `AGENDAV_CALDAV_AUTHMETHOD` | CalDAV auth: `basic` or `digest` | `basic` |
+
+See [`.env.example`](./.env.example) for all available options.
+
+#### CalDAV Server Examples
+
+**Radicale:**
+```env
+AGENDAV_CALDAV_BASEURL=http://host.docker.internal:5232/%u
+```
+
+**Baïkal:**
+```env
+AGENDAV_CALDAV_BASEURL=http://baikal/dav.php/calendars/%u
+```
+
+**Nextcloud:**
+```env
+AGENDAV_CALDAV_BASEURL=https://nextcloud.example.com/remote.php/dav/calendars/%u
+```
+
+#### Reverse Proxy Setup
+
+AgenDAV is designed to run behind a reverse proxy. The internal container exposes port 80.
+
+**Caddy example:**
+```caddyfile
+http://calendar.example.com {
+    reverse_proxy host.docker.internal:8080
+}
+```
+
+**With Caddy + Cloudflare Tunnel:**
+```caddyfile
+http://calendar.example.com {
+    import tinyauth_forwarder
+    reverse_proxy host.docker.internal:8080
+}
+```
+
+**nginx example:**
+```nginx
+server {
+    listen 80;
+    server_name calendar.example.com;
+
+    location / {
+        proxy_pass http://localhost:8080;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+#### Data Persistence
+
+The Docker Compose setup uses named volumes for data persistence:
+
+| Volume | Purpose |
+|--------|---------|
+| `agendav_db` | MariaDB database files |
+| `agendav_logs` | Application logs |
+
+To back up your data:
+```bash
+docker compose exec db mysqldump -u root -p agendav > backup.sql
+```
+
+#### Building from Source
+
+To build the image locally instead of pulling from GHCR:
+
+```bash
+docker compose build
+docker compose up -d
+```
+
+#### Upgrading
+
+```bash
+docker compose pull
+docker compose up -d
+```
+
+Database migrations run automatically on container startup when `AGENDAV_RUN_MIGRATIONS=true`.
 
 ## Source
 
