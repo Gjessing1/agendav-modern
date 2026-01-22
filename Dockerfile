@@ -37,6 +37,9 @@ WORKDIR /build/web
 RUN composer install --no-dev --prefer-dist --no-interaction --optimize-autoloader
 WORKDIR /build
 
+# Cache buster - changes when commit SHA changes to ensure fresh asset builds
+ARG CACHE_BUST=1
+
 # Copy source files needed for build
 COPY assets/ ./assets/
 
