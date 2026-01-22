@@ -79,7 +79,7 @@ td.fc-event-container, div.fc-event-container,
   margin: 5% auto;
   text-align: center;
   width: 430px;
-  border-radius: 12px;
+  border-radius: 18px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -135,24 +135,36 @@ div#logo {
   }
 }
 
+.navbar-header {
+  display: flex;
+  align-items: center;
+}
+
 // Login page logo - larger, centered above form
 .container > div#logo {
-  max-width: 300px;
-  margin: 0 auto 30px auto;
+  max-width: 240px;
+  margin: 40px auto 40px auto;
   padding: 10px;
 
   img {
-    max-height: 150px;
+    max-height: 120px;
   }
 }
 
-// Sidebar logo - constrained to sidebar width
-#sidebar div#logo {
-  max-width: 100%;
-  padding: 5px;
+// Navbar logo - aligned with navbar brand
+#navbar-logo {
+  display: inline-block;
+  margin-right: 15px;
+  vertical-align: middle;
+  height: 50px;
+  line-height: 50px;
 
   img {
-    max-height: 80px;
+    max-height: 40px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    vertical-align: middle;
   }
 }
 

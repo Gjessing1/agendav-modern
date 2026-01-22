@@ -139,3 +139,71 @@ Implemented first visual change to verify the CSS/JS build pipeline works end-to
 - [ ] Optimize logo file size (currently 115KB, should be ~10-20KB)
 - [ ] Consider creating multiple logo sizes for different contexts
 - [ ] Verify changes appear in published GHCR image
+
+---
+
+## 2026-01-22: General UI Enhancements (Task 3)
+
+**Status**: Complete - Ready for verification
+
+Implemented general UI enhancements focusing on login page refinements, calendar navbar improvements, and CI build caching.
+
+### What was implemented
+
+1. **GitHub Container Registry (GHCR) Caching** (`.github/workflows/docker.yml`)
+   - Removed `no-cache: true` to enable build caching
+   - Added `cache-from` parameter pointing to GHCR buildcache ref
+   - Added `cache-to` parameter with `mode=max` for comprehensive layer caching
+   - Expected impact: Significantly faster CI builds by reusing Docker layers
+   - Change location: lines 62-63
+
+2. **Login Page Enhancements** (`assets/less/agendav.less`)
+   - **Increased border radius**: 12px → 18px for more modern appearance (line 82)
+   - **Added visual separation**: Increased top margin from 0 → 40px on logo container (line 141)
+   - **Reduced logo size**: Container 300px → 240px (-20%), max-height 150px → 120px (-20%) (lines 140-145)
+
+3. **Calendar Navbar Logo Repositioning**
+   - **Template changes** (`web/templates/parts/navbar.html`):
+     - Added logo inside navbar-header before the title (lines 4-7)
+   - **Template changes** (`web/templates/parts/sidebar.html`):
+     - Removed logo from sidebar (previously lines 1-5)
+   - **CSS changes** (`assets/less/agendav.less`):
+     - Added `#navbar-logo` styles with 40px max-height aligned with navbar
+     - Added flexbox display to `.navbar-header` for proper alignment
+     - Replaced sidebar logo styles with navbar logo styles (lines 150-163, 165-167)
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `.github/workflows/docker.yml` | Enabled GHCR caching with cache-from/cache-to |
+| `assets/less/agendav.less` | Login form radius, logo sizing, navbar logo styles |
+| `web/templates/parts/navbar.html` | Added logo before title in navbar-header |
+| `web/templates/parts/sidebar.html` | Removed logo from sidebar |
+
+### What was NOT changed
+
+- Backend PHP logic (as per project constraints)
+- Database schema
+- CalDAV protocol behavior
+- Authentication logic
+- Build architecture or dependencies
+- CSS architecture (targeted changes only, no large refactoring)
+
+### Verification steps
+
+1. Build Docker image: `docker-compose up --build`
+2. Verify login page:
+   - Login box has more rounded corners (18px radius vs 12px)
+   - More spacing above logo (40px top margin)
+   - Logo is smaller (240px container vs 300px)
+3. Log in and verify calendar page:
+   - Logo appears in navbar, left of the heading
+   - Logo is sized appropriately (~40px height, aligned with navbar text)
+   - Logo no longer appears in sidebar
+
+### Expected benefits
+
+- **Build performance**: GHCR caching should reduce CI build times from ~5-10 minutes to ~1-2 minutes for unchanged layers
+- **Visual polish**: More modern, rounded login form with better spacing
+- **Improved layout**: Logo in navbar provides better brand visibility and cleaner sidebar

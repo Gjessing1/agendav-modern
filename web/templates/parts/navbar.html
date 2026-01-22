@@ -1,6 +1,11 @@
 <div class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
+      {% if logo %}
+      <div id="navbar-logo">
+        <img src="{{ asset(logo, 'img') }}" alt="Logo">
+      </div>
+      {% endif %}
       <span class="navbar-brand">{{ title }}</span>
    </div>
    <p class="navbar-text navbar-right" id="loading">

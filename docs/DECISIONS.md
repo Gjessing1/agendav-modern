@@ -90,3 +90,41 @@ Build images for both `linux/amd64` and `linux/arm64`.
 ### Alternatives considered
 
 - **amd64 only**: Simpler but excludes growing ARM user base.
+
+---
+
+## 2026-01-22: GHCR Build Caching Strategy
+
+### Decision
+
+Use GitHub Container Registry as a cache backend for Docker layer caching in CI builds, with `mode=max` to cache all layers.
+
+### Reasoning
+
+1. **Build performance**: Caching Docker layers significantly reduces CI build times. Multi-stage builds with npm/composer dependencies can reuse cached layers when dependencies haven't changed.
+
+2. **GHCR as cache backend**: GitHub Container Registry provides:
+   - Free storage for cache layers
+   - Fast access from GitHub Actions runners
+   - Automatic cleanup of old cache entries
+   - No additional infrastructure required
+
+3. **`mode=max` caching**: Caches all build stages and intermediate layers, not just the final image. This maximizes cache hits for:
+   - System package installations (`apt-get install`)
+   - npm dependency installation
+   - Composer dependency installation
+   - Asset compilation (when source hasn't changed)
+
+4. **Cache key strategy**: Using a dedicated `:buildcache` tag ref separates cache data from production image tags, keeping the package page clean.
+
+### Expected impact
+
+- **First build** (cold cache): ~5-10 minutes (unchanged)
+- **Subsequent builds** (warm cache, no changes): ~1-2 minutes (80-90% reduction)
+- **Partial changes** (e.g., code changes but no dependency changes): ~2-4 minutes (50-70% reduction)
+
+### Alternatives considered
+
+- **GitHub Actions cache**: Limited to 10GB per repository, slower than registry cache for Docker layers
+- **No caching (`no-cache: true`)**: Simplest but wastes CI time and resources on every build
+- **`mode=min` caching**: Only caches final image layers, missing opportunities to cache build stage dependencies
