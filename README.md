@@ -64,9 +64,6 @@ AgenDAV requires:
 https://agendav.readthedocs.io/
 
 ## Installation
-
-See [installation guide](https://agendav.readthedocs.io/en/latest/admin/installation/)
-
 ### Docker
 
 AgenDAV Modern provides an official Docker image published to [GitHub Container Registry (GHCR)](https://github.com/Gjessing1/agendav-modern/pkgs/container/agendav-modern).
