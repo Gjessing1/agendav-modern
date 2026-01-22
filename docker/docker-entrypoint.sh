@@ -50,7 +50,7 @@ cat > "$CONFIG_FILE" << EOPHP
 \$app['site.title'] = '${AGENDAV_SITE_TITLE:-AgenDAV}';
 
 // Site logo (should be placed in public/img). Optional
-\$app['site.logo'] = '${AGENDAV_SITE_LOGO:-agendav_100transp.png}';
+\$app['site.logo'] = '${AGENDAV_SITE_LOGO:-agendav-modern-logo.png}';
 
 // Site footer. Optional
 \$app['site.footer'] = '${AGENDAV_SITE_FOOTER:-AgenDAV Modern}';

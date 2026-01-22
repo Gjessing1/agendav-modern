@@ -147,7 +147,6 @@ http://calendar.example.com {
 **With Caddy + Cloudflare Tunnel:**
 ```caddyfile
 http://calendar.example.com {
-    import tinyauth_forwarder
     reverse_proxy host.docker.internal:8080
 }
 ```

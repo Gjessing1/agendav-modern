@@ -76,3 +76,66 @@ Established Docker build infrastructure for AgenDAV Modern, enabling containeriz
 - Push changes and verify GitHub Actions workflow
 - Test with actual CalDAV server (Radicale)
 - Begin UI modernization work (Task 2)
+
+## 2024-01-21
+- **Task 1 Complete:** Established Docker build system.
+    - Created Dockerfile based on upstream requirements.
+    - Configured GitHub Actions to build and publish to GHCR.
+    - Verified container runs locally and serves the application.
+
+---
+
+## 2026-01-22: UI Pipeline Tracer Bullet (Task 2)
+
+**Status**: Complete - Ready for verification
+
+Implemented first visual change to verify the CSS/JS build pipeline works end-to-end.
+
+### What was implemented
+
+1. **Rounded Login Box Corners** (`assets/less/agendav.less`)
+   - Added `border-radius: 12px` to `.loginform` class
+   - Added subtle `box-shadow` for modern depth effect
+   - Change location: lines 76-84
+
+2. **New AgenDAV Modern Logo**
+   - Added `agendav-modern-logo.png` to `web/public/img/`
+   - Source: `assets/artwork/agendav-modern-transparent.png` (581x430px)
+   - Updated default logo in `docker/docker-entrypoint.sh`
+   - Added CSS constraints for logo sizing (max-width: 200px, max-height: 150px)
+
+3. **Logo Container Styling** (`assets/less/agendav.less`)
+   - Enhanced `div#logo` with margin and image constraints
+   - Change location: lines 119-128
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/less/agendav.less` | Added border-radius, box-shadow to login form; logo sizing |
+| `web/public/img/agendav-modern-logo.png` | New logo file (copied from artwork) |
+| `docker/docker-entrypoint.sh` | Changed default logo to agendav-modern-logo.png |
+
+### What was NOT changed
+
+- Backend PHP logic (as per project constraints)
+- Database schema
+- CalDAV protocol behavior
+- Authentication logic
+- Template structure (only CSS styling)
+
+### Verification steps
+
+1. Build Docker image: `docker-compose up --build`
+2. Navigate to login page
+3. Verify:
+   - Login box has rounded corners (12px radius)
+   - Login box has subtle shadow
+   - New AgenDAV Modern logo is displayed
+   - Logo is appropriately sized (max 200px wide)
+
+### Follow-up tasks
+
+- [ ] Optimize logo file size (currently 115KB, should be ~10-20KB)
+- [ ] Consider creating multiple logo sizes for different contexts
+- [ ] Verify changes appear in published GHCR image
