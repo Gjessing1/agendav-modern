@@ -2,11 +2,13 @@
    {@i18n type="messages" name="info_notshared"/}
 </p>
 
+<div class="table-responsive">
 <div id="shares">
 {#shares}
 {>calendar_share_row /}
 {/shares}
 
+</div>
 </div>
 
 <div class="text-right">
