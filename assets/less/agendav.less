@@ -99,13 +99,27 @@ span.username {
     .make-row();
 }
 
+// Mobile-first: stack vertically on small screens
 #sidebar {
-  .make-md-column(2);
-  max-width: 200px;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 #content {
-  .make-md-column(10);
+  width: 100%;
+}
+
+// Tablet and up: side-by-side layout
+@media (min-width: @screen-sm-min) {
+  #sidebar {
+    .make-md-column(2);
+    max-width: 200px;
+    margin-bottom: 0;
+  }
+
+  #content {
+    .make-md-column(10);
+  }
 }
 
 #footer {
@@ -231,8 +245,8 @@ div.panel-body .buttons {
 /* overlay starts */
 
 .view_event_details {
-  width: 400px !important;
-  max-width: 400px !important;
+  width: 90%;
+  max-width: 400px;
 
   p.start_and_finish {
     font-style: italic;
@@ -307,7 +321,8 @@ div.share_info {
   background: url(../../img/share_big.png) var(--bg-surface-secondary) center left no-repeat;
   padding: 10px 10px 10px 40px;
   border: 1px solid var(--border-subtle);
-  width: 350px;
+  width: 90%;
+  max-width: 350px;
   margin: 0.5em auto 0.5em auto;
 }
 
@@ -399,6 +414,17 @@ i.calendar_color {
 #reminders_table,
 #calendar_share_table {
   margin-bottom: 30px;
+}
+
+// Responsive table wrapper for mobile devices
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  min-height: 0.01%; // Workaround for IE9-10 bug
+
+  @media (min-width: @screen-sm-min) {
+    overflow-x: visible;
+  }
 }
 
 #prefs_buttons {
