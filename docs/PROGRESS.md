@@ -352,7 +352,127 @@ Implemented mobile-first CSS patterns to replace fixed widths with responsive la
 
 ### Potential follow-ups
 
--   [ ] Apply `.table-responsive` wrapper to actual table elements in templates (requires template edits)
--   [ ] Test and optimize FullCalendar mobile responsiveness (may need additional mobile-first tweaks)
--   [ ] Consider collapsible/off-canvas sidebar for better mobile UX (enhancement)
+-   [x] Apply `.table-responsive` wrapper to actual table elements in templates (✅ Completed in Task 6.1)
+-   [x] Test and optimize FullCalendar mobile responsiveness (✅ Completed in Task 6.2)
+-   [x] Consider collapsible/off-canvas sidebar for better mobile UX (✅ Completed in Task 6.2)
 -   [ ] Replace jQuery UI dialogs with mobile-friendly alternatives (long-term improvement)
+
+---
+
+## 2026-01-23: Mobile UX Enhancements - Tables, Sidebar & Calendar (Task 6 Follow-ups)
+
+**Status**: Complete - Verified with build
+
+Implemented three major mobile UX improvements as follow-ups to Task 6's mobile-first foundation.
+
+### What was implemented
+
+#### 1. Responsive Table Wrappers
+
+**Templates Modified:**
+-   `assets/templates/calendar_share_table.dust` - Wrapped `#shares` div
+-   `assets/templates/reminders.dust` - Wrapped `#reminders` div
+
+**Result:**
+-   Tabular layouts now scroll horizontally on mobile (<768px) instead of breaking layout
+-   Smooth touch scrolling enabled with `-webkit-overflow-scrolling: touch`
+-   Tables remain normal on desktop (≥768px)
+
+#### 2. Off-Canvas Sidebar Navigation
+
+**Templates:**
+-   Added hamburger button (`#sidebar-toggle`) to navbar with three horizontal bars
+-   Added overlay div (`#sidebar-overlay`) to darken content when sidebar is open
+-   Location: `web/templates/parts/navbar.html`, `web/templates/calendar.html`
+
+**CSS (`assets/less/agendav.less`):**
+-   Mobile (<768px): Sidebar positioned fixed, off-screen at `left: -250px`
+-   Slides in via `transform: translateX(250px)` when `.sidebar-open` class is applied to body
+-   Hamburger button styled with 44px min-height (iOS recommended touch target)
+-   Semi-transparent overlay (rgba(0,0,0,0.5)) appears behind sidebar
+-   Desktop (≥768px): Hamburger hidden, sidebar returns to static position
+
+**JavaScript (`assets/js/app/app.js`):**
+-   Toggle `.sidebar-open` class on hamburger click
+-   Remove class when overlay is clicked (closes sidebar)
+-   Auto-close sidebar when sidebar link is clicked on mobile
+-   Uses jQuery event handlers for compatibility
+
+**Result:**
+-   Mobile users can access sidebar via hamburger menu
+-   Desktop users see unchanged side-by-side layout
+-   Smooth 0.3s transition animations
+
+#### 3. FullCalendar Mobile Optimizations
+
+**CSS (`assets/less/agendav.less`):**
+-   Larger touch targets for calendar buttons: 44px min-height (iOS guideline)
+-   Increased button padding: 8px 12px
+-   Improved header toolbar spacing: 10px 5px with 5px margins on sections
+-   Larger event text: 13px with 4px 6px padding
+-   Hidden week numbers on mobile to save horizontal space
+-   Larger day numbers: 14px font-size with 8px padding
+-   Better list item spacing: 10px padding
+-   Improved "more events" link: 13px font-size, 4px padding
+
+**JavaScript (`assets/js/app/app.js`):**
+-   Auto-switch to list view when screen width < 768px
+-   Only applies to users with month/week default views
+-   Day and list view users keep their preferences
+-   Desktop users (≥768px) always see their preferred view
+-   Detection runs once at page load
+
+**Result:**
+-   Calendar buttons are easier to tap on mobile
+-   List view provides better mobile experience than cramped month view
+-   Touch interactions more reliable with larger targets
+-   User preferences respected on desktop
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/templates/calendar_share_table.dust` | Added .table-responsive wrapper |
+| `assets/templates/reminders.dust` | Added .table-responsive wrapper |
+| `assets/templates/templates.js` | Rebuilt Dust templates |
+| `web/templates/parts/navbar.html` | Added hamburger button |
+| `web/templates/calendar.html` | Added sidebar overlay div |
+| `assets/less/agendav.less` | Added sidebar + FullCalendar mobile styles |
+| `assets/js/app/app.js` | Added sidebar toggle + list view mobile default |
+| `docs/PROGRESS.md` | Updated with Task 6 follow-ups |
+
+### What was NOT changed
+
+-   jQuery UI dialogs remain unchanged (per user request - future work)
+-   No backend PHP logic modified
+-   Database schema unchanged
+-   CalDAV protocol behavior unchanged
+-   Desktop experience preserved (all changes are mobile-only)
+-   User preferences still respected (mobile list view is smart default, not forced)
+
+### Verification steps
+
+1.  Build assets: `npm run build:css && npm run build:js && npm run build:templates`
+2.  **Test Sidebar:**
+    -   Resize browser < 768px
+    -   Verify hamburger appears in navbar
+    -   Click hamburger, sidebar slides in from left
+    -   Click overlay or sidebar link, sidebar closes
+    -   Resize > 768px, verify sidebar is static and hamburger hidden
+3.  **Test Tables:**
+    -   Navigate to calendar sharing or reminders
+    -   On mobile viewport, verify horizontal scroll if content overflows
+    -   On desktop, verify normal table display
+4.  **Test Calendar:**
+    -   Open calendar on mobile viewport (<768px)
+    -   Verify list view loads by default (if user pref was month/week)
+    -   Check button sizes (should be easy to tap)
+    -   Verify event text is readable
+    -   Resize to desktop, verify normal calendar view
+
+### Remaining follow-ups
+
+-   [ ] Replace jQuery UI dialogs with mobile-friendly alternatives (future enhancement)
+-   [ ] Consider progressive web app (PWA) features (installability, offline support)
+-   [ ] Test with real CalDAV server and production data
+-   [ ] Gather user feedback on mobile experience
