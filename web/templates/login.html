@@ -19,7 +19,7 @@
 </div>
 {% endif %}
 
-<div class="loginform ui-corner-all">
+<div class="loginform">
   <form method="post" action="{{ path('login') }}" class="form-horizontal" autocomplete="on">
     <input type="hidden" name="_token" value="{{ csrf_token.getValue() }}">
     <div class="form-group">

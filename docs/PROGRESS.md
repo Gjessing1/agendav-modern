@@ -202,12 +202,6 @@ Implemented general UI enhancements focusing on login page refinements, calendar
    - Logo is sized appropriately (~40px height, aligned with navbar text)
    - Logo no longer appears in sidebar
 
-### Expected benefits
-
-- **Build performance**: GHCR caching should reduce CI build times from ~5-10 minutes to ~1-2 minutes for unchanged layers
-- **Visual polish**: More modern, rounded login form with better spacing
-- **Improved layout**: Logo in navbar provides better brand visibility and cleaner sidebar
-
 ---
 
 ## 2026-01-23: Token-Based Architecture Refactor (Task 4)
@@ -255,3 +249,47 @@ Transitioned the custom application styles to a token-based architecture using C
 1.  Run `npm install && npm run build:css`.
 2.  Inspect `web/public/dist/css/agendav.css` (if accessible) or load the app.
 3.  Verify that `var(--...)` references are present and the app looks unchanged.
+
+---
+
+## 2026-01-23: Login Page & Mobile Responsiveness (Task 5)
+
+**Status**: Complete - Verified with build
+
+Improved the responsiveness of the login page and analyzed the codebase for future "Mobile First" improvements.
+
+### What was implemented
+
+1.  **Responsive Login Form** (`assets/less/agendav.less`)
+    -   Changed `.loginform` width from fixed `430px` to `max-width: 430px; width: 90%;`.
+    -   Changed `.loginerrors` width from fixed `400px` to `max-width: 400px; width: 90%;`.
+    -   This ensures the form scales down gracefully on mobile devices while maintaining the original design on desktop.
+
+2.  **Cleaner Template** (`web/templates/login.html`)
+    -   Removed `ui-corner-all` class from `.loginform` to prevent potential conflicts with the custom `border-radius` (18px) and separate legacy jQuery UI styles from modern app styles.
+
+### Mobile First Audit (Future Work)
+
+A review of the codebase identified several areas for improvement to achieve a true "Mobile First" experience:
+
+1.  **Sidebar (`#sidebar`)**: Currently fixed `max-width: 200px`. On mobile, this should likely be a collapsible drawer or off-canvas menu.
+2.  **Event Details (`.view_event_details`)**: Has `width: 400px !important`. This will break on small screens. Needs to be converted to a full-screen modal or a responsive bottom sheet on mobile.
+3.  **Share Info (`div.share_info`)**: Fixed width `350px`. Needs responsive `max-width`.
+4.  **jQuery UI Dialogs**: Many dialogs rely on jQuery UI's absolute positioning and calculated widths. These often fail on mobile. Replacing them with Bootstrap Modals (already available in the project) would be a significant upgrade.
+5.  **Tables**: `#calendar_share_table`, `#reminders_table`, and calendar views need a strategy for narrow screens (e.g., horizontal scroll, stacked cards, or simplified views).
+6.  **FullCalendar**: Verify `fc-view` behavior on mobile. "List" view is often better than "Month" view for small devices.
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/less/agendav.less` | Responsive widths for login form/errors |
+| `web/templates/login.html` | Removed `ui-corner-all` class |
+| `docs/PROGRESS.md` | Updated |
+
+### Verification steps
+
+1.  Build CSS: `npm run build:css`
+2.  Open Login page.
+3.  Resize browser window < 430px.
+4.  Verify form shrinks to fit (90% width) and margins remain consistent.
