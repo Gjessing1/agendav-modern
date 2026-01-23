@@ -293,3 +293,66 @@ A review of the codebase identified several areas for improvement to achieve a t
 2.  Open Login page.
 3.  Resize browser window < 430px.
 4.  Verify form shrinks to fit (90% width) and margins remain consistent.
+
+---
+
+## 2026-01-23: Mobile-First CSS Architecture (Task 6)
+
+**Status**: Complete - Verified with build
+
+Implemented mobile-first CSS patterns to replace fixed widths with responsive layouts. All critical components now scale from mobile (100% width) to desktop (constrained widths) using media queries at 768px breakpoint.
+
+### What was implemented
+
+1.  **Event Details Popup** (`.view_event_details`)
+    -   Changed from: `width: 400px !important; max-width: 400px !important;`
+    -   Changed to: `width: 90%; max-width: 400px;`
+    -   Removed dangerous `!important` flags that prevented responsive behavior
+    -   Location: `assets/less/agendav.less:234-235`
+
+2.  **Share Info Box** (`div.share_info`)
+    -   Changed from: `width: 350px;`
+    -   Changed to: `width: 90%; max-width: 350px;`
+    -   Location: `assets/less/agendav.less:310`
+
+3.  **Sidebar & Content Layout** (`#sidebar` and `#content`)
+    -   **Mobile (< 768px)**: Stack vertically at 100% width
+    -   **Tablet+ (≥ 768px)**: Side-by-side 2/10 column layout with 200px max-width sidebar
+    -   Added first `@media (min-width: @screen-sm-min)` breakpoint to app styles
+    -   Location: `assets/less/agendav.less:102-121`
+
+4.  **Responsive Table Wrapper** (`.table-responsive`)
+    -   Added utility class with horizontal scroll on mobile
+    -   Automatically disables overflow on desktop (≥ 768px)
+    -   Ready for use in templates
+    -   Location: `assets/less/agendav.less:418-427`
+
+### Files modified
+
+| File | Change |
+|------|--------|
+| `assets/less/agendav.less` | Added mobile-first patterns, media queries, responsive widths |
+| `docs/PROGRESS.md` | Updated with Task 6 completion |
+
+### What was NOT changed
+
+-   No JavaScript modifications (CSS-only changes per mobile-first constraints)
+-   No template files modified (styles ready, templates can be updated separately)
+-   No backend PHP logic touched
+-   Bootstrap core files untouched
+-   Build configuration unchanged
+
+### Verification steps
+
+1.  Build CSS: `npm run build:css`
+2.  Test event detail popups on mobile viewports (≤ 375px width)
+3.  Verify sidebar/content stacking on tablet breakpoint (768px)
+4.  Check share info dialogs on small screens (< 350px)
+5.  Resize browser to confirm smooth responsive behavior
+
+### Potential follow-ups
+
+-   [ ] Apply `.table-responsive` wrapper to actual table elements in templates (requires template edits)
+-   [ ] Test and optimize FullCalendar mobile responsiveness (may need additional mobile-first tweaks)
+-   [ ] Consider collapsible/off-canvas sidebar for better mobile UX (enhancement)
+-   [ ] Replace jQuery UI dialogs with mobile-friendly alternatives (long-term improvement)
