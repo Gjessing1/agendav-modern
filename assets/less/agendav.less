@@ -99,26 +99,96 @@ span.username {
     .make-row();
 }
 
-// Mobile-first: stack vertically on small screens
+// Mobile-first: off-canvas sidebar on small screens
 #sidebar {
-  width: 100%;
-  margin-bottom: 15px;
+  position: fixed;
+  top: 51px; // Navbar height
+  left: -250px; // Hidden off-screen
+  width: 250px;
+  height: calc(100vh - 51px);
+  overflow-y: auto;
+  background-color: var(--bg-surface-primary);
+  z-index: 1040;
+  transition: transform 0.3s ease-in-out;
+  padding: 15px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
 #content {
   width: 100%;
+  transition: margin-left 0.3s ease-in-out;
 }
 
-// Tablet and up: side-by-side layout
+// Sidebar open state (mobile)
+.sidebar-open #sidebar {
+  transform: translateX(250px);
+}
+
+// Overlay when sidebar is open
+#sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1030;
+}
+
+.sidebar-open #sidebar-overlay {
+  display: block;
+}
+
+// Hamburger button (mobile only)
+#sidebar-toggle {
+  display: block;
+  float: left;
+  margin: 8px 15px 8px 0;
+  padding: 9px 10px;
+  background-color: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: 4px;
+
+  .icon-bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    background-color: var(--text-primary);
+    + .icon-bar {
+      margin-top: 4px;
+    }
+  }
+
+  &:hover, &:focus {
+    background-color: var(--bg-surface-secondary);
+  }
+}
+
+// Tablet and up: side-by-side layout, hide toggle button
 @media (min-width: @screen-sm-min) {
+  #sidebar-toggle {
+    display: none;
+  }
+
   #sidebar {
+    position: static;
+    transform: none;
     .make-md-column(2);
     max-width: 200px;
     margin-bottom: 0;
+    height: auto;
+    box-shadow: none;
+    padding: 0;
   }
 
   #content {
     .make-md-column(10);
+  }
+
+  #sidebar-overlay {
+    display: none !important;
   }
 }
 
@@ -382,6 +452,55 @@ td.fc-day-number.fc-today {
   font-weight: bold;
   color: var(--text-accent);
   font-size: 110%;
+}
+
+// Mobile-specific FullCalendar optimizations
+@media (max-width: @screen-xs-max) {
+  // Larger touch targets for buttons
+  .fc-button {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    min-height: 44px !important; // iOS recommended touch target
+  }
+
+  // Better spacing for header
+  .fc-header-toolbar {
+    padding: 10px 5px !important;
+
+    .fc-left, .fc-right, .fc-center {
+      margin: 5px 0 !important;
+    }
+  }
+
+  // Larger event text on mobile
+  .fc-event {
+    font-size: 13px !important;
+    padding: 4px 6px !important;
+  }
+
+  // Hide week numbers on very small screens
+  .fc-week-number {
+    display: none !important;
+  }
+
+  // Improve day number visibility
+  .fc-day-number {
+    padding: 8px !important;
+    font-size: 14px !important;
+  }
+
+  // List view optimization for mobile
+  .fc-list-item {
+    td {
+      padding: 10px !important;
+    }
+  }
+
+  // Better "more events" link
+  .fc-more {
+    font-size: 13px !important;
+    padding: 4px !important;
+  }
 }
 
 #loading {

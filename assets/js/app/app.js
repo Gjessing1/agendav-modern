@@ -76,6 +76,12 @@ $(document).ready(function() {
     'list': 'customizable_list'
   };
 
+  // Mobile optimization: use list view on small screens for better UX
+  var default_view = fullcalendar_views[AgenDAVUserPrefs.default_view];
+  if ($(window).width() < 768 && (default_view === 'month' || default_view === 'agendaWeek')) {
+    default_view = 'customizable_list';
+  }
+
   // Enable full calendar
   $('#calendar_view').fullCalendar({
     selectable: true,
@@ -106,7 +112,7 @@ $(document).ready(function() {
     },
     navLinks: true,
 
-    defaultView: fullcalendar_views[AgenDAVUserPrefs.default_view],
+    defaultView: default_view,
     theme: true, // use jQuery UI themeing
     slotLabelFormat: AgenDAVDateAndTime.fullCalendarFormat[AgenDAVUserPrefs.time_format],
     slotMinutes: 30,
@@ -333,6 +339,23 @@ $(document).ready(function() {
 
     // Printing
     setup_print_tweaks();
+
+    // Mobile sidebar toggle
+    $('#sidebar-toggle').on('click', function() {
+        $('body').toggleClass('sidebar-open');
+    });
+
+    // Close sidebar when clicking overlay
+    $('#sidebar-overlay').on('click', function() {
+        $('body').removeClass('sidebar-open');
+    });
+
+    // Close sidebar when clicking a sidebar link (on mobile)
+    $('#sidebar a').on('click', function() {
+        if ($(window).width() < 768) {
+            $('body').removeClass('sidebar-open');
+        }
+    });
 
 });
 

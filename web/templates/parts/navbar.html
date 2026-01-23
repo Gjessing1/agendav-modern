@@ -1,6 +1,11 @@
 <div class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       {% if logo %}
       <div id="navbar-logo">
         <img src="{{ asset(logo, 'img') }}" alt="Logo">
