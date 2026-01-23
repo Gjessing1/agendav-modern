@@ -74,13 +74,13 @@ td.fc-event-container, div.fc-event-container,
 }
 
 .loginform {
-  background-color: #fff;
+  background-color: var(--bg-surface-primary);
   padding: 20px;
   margin: 5% auto;
   text-align: center;
   width: 430px;
   border-radius: 18px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--shadow-color);
 }
 
 .loginerrors {
@@ -111,7 +111,7 @@ span.username {
 }
 
 #footer p {
-  color: #777777;
+  color: var(--text-secondary);
 }
 
 label.suboption {
@@ -203,11 +203,11 @@ div.panel-body .buttons {
 
     span.icons {
       margin-right: 1px;
-      color: #a0a0a0;
+      color: var(--text-muted);
     }
 
     &:hover {
-      background-color: #f0f0f0;
+      background-color: var(--bg-hover);
       padding-right: 20px;
 
       > i.cfg {
@@ -220,7 +220,7 @@ div.panel-body .buttons {
     }
 
     &.hidden_calendar, &.hidden_calendar i {
-      color: #eaeaea !important;
+      color: var(--text-disabled) !important;
     }
   }
 }
@@ -301,9 +301,9 @@ span.shared {
 }
 
 div.share_info {
-  background: url(../../img/share_big.png) #fafafa center left no-repeat;
+  background: url(../../img/share_big.png) var(--bg-surface-secondary) center left no-repeat;
   padding: 10px 10px 10px 40px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-subtle);
   width: 350px;
   margin: 0.5em auto 0.5em auto;
 }
@@ -362,7 +362,7 @@ span.fc-event-icons {
 
 td.fc-day-number.fc-today {
   font-weight: bold;
-  color: #3A6440;
+  color: var(--text-accent);
   font-size: 110%;
 }
 
@@ -377,11 +377,11 @@ i.calendar_color {
 }
 
 .pseudobutton {
-  color: #8C8C8C;
+  color: var(--text-subtle);
   display: inline-block;
   padding: 2px;
   &:hover {
-    color: #000;
+    color: var(--text-primary);
     cursor: pointer;
     background-color: @agendavbgHoverPseudobutton !important;
   }

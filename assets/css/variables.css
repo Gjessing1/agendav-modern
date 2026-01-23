@@ -1,0 +1,43 @@
+:root {
+  /* Primitives */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f0f0f0;
+  --color-gray-200: #eaeaea;
+  --color-gray-300: #e0e0e0;
+  --color-gray-400: #cccccc;
+  --color-gray-500: #a0a0a0;
+  --color-gray-600: #8c8c8c;
+  --color-gray-700: #777777;
+  
+  --color-green-800: #3a6440;
+  --color-blue-300: #a9d6ff;
+  --color-cream: #faf9f7;
+  
+  /* Semantic Tokens */
+  
+  /* Backgrounds */
+  --bg-app: var(--color-cream);
+  --bg-surface-primary: var(--color-white);
+  --bg-surface-secondary: var(--color-gray-50);
+  --bg-hover: var(--color-gray-100);
+  --bg-highlight: var(--color-blue-300);
+  
+  /* Text */
+  --text-primary: var(--color-black);
+  --text-secondary: var(--color-gray-700);
+  --text-muted: var(--color-gray-500);
+  --text-subtle: var(--color-gray-600);
+  --text-disabled: var(--color-gray-200);
+  --text-inverse: var(--color-white);
+  --text-accent: var(--color-green-800);
+  
+  /* Borders */
+  --border-subtle: var(--color-gray-300);
+  --border-default: var(--color-gray-400);
+  
+  /* Shadows */
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}

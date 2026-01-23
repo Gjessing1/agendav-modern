@@ -207,3 +207,51 @@ Implemented general UI enhancements focusing on login page refinements, calendar
 - **Build performance**: GHCR caching should reduce CI build times from ~5-10 minutes to ~1-2 minutes for unchanged layers
 - **Visual polish**: More modern, rounded login form with better spacing
 - **Improved layout**: Logo in navbar provides better brand visibility and cleaner sidebar
+
+---
+
+## 2026-01-23: Token-Based Architecture Refactor (Task 4)
+
+**Status**: Complete - Verified with build
+
+Transitioned the custom application styles to a token-based architecture using CSS Variables. This lays the foundation for future theming (e.g., Dark Mode) while maintaining strict visual parity with the existing design.
+
+### What was implemented
+
+1.  **Token System** (`assets/css/variables.css`)
+    -   Created a new CSS file defining the color palette.
+    -   Defined **Primitive Tokens**: Raw hex values (e.g., `--color-white`, `--color-gray-100`).
+    -   Defined **Semantic Tokens**: Mapped primitives to usage (e.g., `--bg-surface-primary`, `--text-secondary`).
+    -   Followed naming convention: `--bg-*`, `--text-*`, `--border-*`.
+
+2.  **Styles Refactoring** (`assets/less/agendav.less`)
+    -   Replaced all hardcoded hex/rgb color values with `var(--token-name)`.
+    -   Ensured no orphan hex codes remain in the custom app styles.
+    -   Mapped specific elements like `.loginform`, `#footer`, `.share_info`, `.fc-today` to appropriate semantic tokens.
+
+3.  **Bootstrap Variable Overrides** (`assets/less/bootstrap_variables.less`)
+    -   Updated `@agendavbgColor` and `@agendavbgHoverPseudobutton` to use the new CSS variables.
+
+4.  **Build Verification**
+    -   Verified that `npm run build:css` includes the new `variables.css` (concatenated into `agendav.css`) and compiles successfully.
+    -   Ran `npm install` to ensure environment readiness.
+
+### Files created/modified
+
+| File | Change |
+|------|--------|
+| `assets/css/variables.css` | Created: Defines CSS variables (primitives and semantics) |
+| `assets/less/agendav.less` | Modified: Replaced hardcoded colors with `var(--...)` |
+| `assets/less/bootstrap_variables.less` | Modified: Updated custom variables to use tokens |
+| `docs/PROGRESS.md` | Updated |
+
+### What was NOT changed
+
+-   `assets/less/bootstrap.theme.less` and other vendor files were left largely untouched to avoid breaking complex Less mixins (darken/lighten) and to minimize risk, adhering to the "Safe Refactor" scope.
+-   Visual design (layout, spacing, fonts) remains identical.
+
+### Verification steps
+
+1.  Run `npm install && npm run build:css`.
+2.  Inspect `web/public/dist/css/agendav.css` (if accessible) or load the app.
+3.  Verify that `var(--...)` references are present and the app looks unchanged.
